@@ -38,4 +38,18 @@ describe('LoginForm', () => {
     await user.click(forgotLink)
     expect(handleForgotPassword).toHaveBeenCalledTimes(1)
   })
+
+  it('shows validation errors when submitting empty required fields', async () => {
+    const user = userEvent.setup()
+    const handleSubmit = vi.fn()
+
+    render(<LoginForm onSubmit={handleSubmit} />)
+
+    const submitButton = screen.getByRole('button', { name: /login/i })
+    await user.click(submitButton)
+
+    expect(handleSubmit).not.toHaveBeenCalled()
+    expect(screen.getByText('Informe seu email ou usuário.')).toBeInTheDocument()
+    expect(screen.getByText('Informe sua senha.')).toBeInTheDocument()
+  })
 })
