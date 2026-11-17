@@ -42,10 +42,29 @@ export function LoginForm({
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
+  const [errors, setErrors] = useState<{
+    identifier?: string
+    password?: string
+  }>({})
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onSubmit?.({ identifier, password, rememberMe })
+
+    const nextErrors: { identifier?: string; password?: string } = {}
+    if (!identifier.trim()) {
+      nextErrors.identifier = 'Informe seu email ou usuário.'
+    }
+    if (!password) {
+      nextErrors.password = 'Informe sua senha.'
+    }
+
+    if (nextErrors.identifier || nextErrors.password) {
+      setErrors(nextErrors)
+      return
+    }
+
+    setErrors({})
+    onSubmit?.({ identifier: identifier.trim(), password, rememberMe })
   }
 
   return (
@@ -58,7 +77,13 @@ export function LoginForm({
         placeholder="usuario123"
         autoComplete="username"
         value={identifier}
-        onChange={(event) => setIdentifier(event.target.value)}
+        error={errors.identifier}
+        onChange={(event) => {
+          setIdentifier(event.target.value)
+          if (errors.identifier) {
+            setErrors((prev) => ({ ...prev, identifier: undefined }))
+          }
+        }}
         required
       />
 
@@ -71,7 +96,13 @@ export function LoginForm({
           placeholder="******"
           autoComplete="current-password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          error={errors.password}
+          onChange={(event) => {
+            setPassword(event.target.value)
+            if (errors.password) {
+              setErrors((prev) => ({ ...prev, password: undefined }))
+            }
+          }}
           required
         />
 

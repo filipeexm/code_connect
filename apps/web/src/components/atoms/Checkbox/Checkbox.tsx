@@ -20,11 +20,11 @@ export function Checkbox({
         <input
           id={id}
           type="checkbox"
-          className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[3px] border-2 border-[#888888] bg-transparent transition-colors checked:border-[#888888] checked:bg-transparent focus:ring-2 focus:ring-[#81FE88] focus:outline-none"
+          className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[3px] border-2 border-[#888888] bg-transparent transition-colors checked:border-[#81FE88] checked:bg-transparent focus:ring-2 focus:ring-[#81FE88] focus:outline-none"
           {...props}
         />
         <svg
-          className="pointer-events-none absolute h-3 w-3 text-[#888888] opacity-0 transition-opacity peer-checked:opacity-100"
+          className="pointer-events-none absolute h-3 w-3 text-[#81FE88] opacity-0 transition-opacity peer-checked:opacity-100"
           viewBox="0 0 12 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
